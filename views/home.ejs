@@ -1,0 +1,8 @@
+<%- include("partials/header"); %>
+<h1>TRUWS</h1>
+<p><%= content %></p>
+<% posts.forEach(post => { %>
+    <h1><%= post.title.toUpperCase() %></h1>
+    <p><%= post.content %></p>
+<% }) %> 
+<%- include("partials/footer"); %>
