@@ -3,6 +3,7 @@
 const express = require(`express`);
 const bodyParser = require(`body-parser`);
 const ejs = require(`ejs`);
+const lodash = require(`lodash`);
 const content = require(__dirname + "/content.js");
 
 const app = express();
@@ -34,8 +35,15 @@ app.get("/compose", function (req, res) {
 });
 
 app.get("/articles/:articleName", function (req, res) {
-  console.log(req.params.articleName);
-  res.render("home", { content: content.homeContent, posts: posts });
+  const { articleName } = req.params;
+  const article = posts.find(
+    (post) => lodash.lowerCase(post.title) === lodash.lowerCase(articleName)
+  );
+  if (!article) {
+    res.redirect(`/`);
+    return;
+  }
+  res.render("post", { title: article.title, content: article.content });
 });
 
 //APP.POST
@@ -45,6 +53,7 @@ app.post("/compose", function (req, res) {
   const post = {
     title: articleTitle,
     content: articleContent,
+    link: "articles/" + lodash.lowerCase(articleTitle).split(" ").join("-"),
   };
   posts.push(post);
   res.redirect("/");

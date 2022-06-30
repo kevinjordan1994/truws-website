@@ -2,7 +2,7 @@
 <h1>TRUWS</h1>
 <p><%= content %></p>
 <% posts.forEach(post => { %>
-    <h1><%= post.title.toUpperCase() %></h1>
-    <p><%= post.content %></p>
+    <h1><%= post.title %></h1>
+    <p><%= post.content.slice(0, 99) + "... " %><a href=<%= post.link %>>Read More</a></p>
 <% }) %> 
 <%- include("partials/footer"); %>
